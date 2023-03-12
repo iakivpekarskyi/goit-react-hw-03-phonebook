@@ -5,6 +5,7 @@ import { GlobalStyles } from 'components/GlobalStyle';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 export class App extends Component {
   state = {
@@ -55,15 +56,17 @@ export class App extends Component {
 
     return (
       <Layout>
-        <GlobalStyles />
-        <h1>Phonebook</h1>
-        <ContactForm onAddContact={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter value={filter} onFilterChange={this.filterContacts} />
-        <ContactList
-          contacts={updatedContacts}
-          deleteContact={this.deleteContact}
-        />
+        <ErrorBoundary fallback="Sorry something went wrong ">
+          <GlobalStyles />
+          <h1>Phonebook</h1>
+          <ContactForm onAddContact={this.addContact} />
+          <h2>Contacts</h2>
+          <Filter value={filter} onFilterChange={this.filterContacts} />
+          <ContactList
+            contacts={updatedContacts}
+            deleteContact={this.deleteContact}
+          />
+        </ErrorBoundary>
       </Layout>
     );
   }
